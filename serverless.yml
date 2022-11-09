@@ -14,7 +14,7 @@ plugins:
 provider:
   name: google
   runtime: python37
-  project: <project>
+  project: student-00331
   credentials: ~/.gcloud/keyfile.json # path must be absolute
 
 functions:
