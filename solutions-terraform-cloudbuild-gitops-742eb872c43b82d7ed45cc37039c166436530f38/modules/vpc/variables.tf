@@ -13,5 +13,18 @@
 # limitations under the License.
 
 
-variable "project" {}
-variable "env" {}
+#variable "project" {}
+
+variable "env" {
+  type        = string
+  description = "env"
+}
+
+variable "project" {
+  type        = string
+  description = "Define the name/ID of Project"
+}
+
+
+#variable "env" {}
+
