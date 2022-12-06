@@ -1,62 +1,19 @@
-Simple HTTP Endpoint Example
-This example demonstrates how to setup a simple python HTTP GET endpoint. When you fetch the endpoint we've set up here you'll see the time returned for the given request type.
+# Automating Terraform with GitHub Actions
 
-Use Cases
-Wrapping an existing internal or external endpoint/service
-Development
-The GCF python runtime has a few requirements when defining your solution, in particular both a requirements.txt and your initial handler living in main.py. More details are listed here:
+[![terraform-automation](https://github.com/r4rohan/terraform-with-cicd/actions/workflows/terraform.yml/badge.svg?branch=main)](https://github.com/r4rohan/terraform-with-cicd/actions/workflows/terraform.yml)
 
-https://cloud.google.com/functions/docs/concepts/python-runtime
+This repo is a part of Medium Article. <br>
+Follow Medium blog for steps: [Automating Terraform with GitHub Actions](https://rohankalhans.medium.com/automating-terraform-with-github-actions-5b3aac5abea7)
 
-Deploy
-In order to deploy the you endpoint simply run
+**Main Points**
+* GCS bucket is serving as terraform backend.
+* Workflow offers concurrency which means only one workflow can be run at a time; I’ve done this to prevent our terraform state from locking and getting corrupted.
+* GitHub secrets are being used to pass GCP Service Account credentials safely on runtime.
+* Terraform Plan generates a plan file which is further used by terraform apply. This is done to prevent uninformed changes b/w plan and apply.
+* Terraform code must be properly formatted which is considered a good practice else terraform format validation will throw an error and the pipeline would get stopped.
+* Manual Approval before applying terraform apply stage.
+* Slack Integration for Workflow Alerts.
 
-serverless deploy -v
-The expected result should be similar to:
+Clap and share if you find it useful.
 
-Serverless: Uploading artifacts...
-Serverless: Artifacts successfully uploaded...
-Serverless: Updating deployment...
-Serverless: Checking deployment update progress...
-..............
-Serverless: Done...
-Service Information
-service: python-simple-http-endpoint
-project: <project_name>
-stage: dev
-region: <region>
-
-Deployed functions
-currentTime
-  https://<region>-<project_name>.cloudfunctions.net/endpoint
-Usage
-You can now invoke the Cloud Function directly and even see the resulting log via
-
-serverless invoke --function currentTime
-The expected result should be similar to:
-
-Serverless: tudkstajertt {
-    "statusCode": 200,
-    "body": {
-        "message": "Received a POST request at 17:44:58.448696"
-    }
-}
-And to check out the logs directly from sls, you can run the following:
-
-serverless logs --function currentTime
-...
-Serverless: Displaying the 10 most recent log(s):
-
-2018-11-21T17:44:58.450200631Z: Function execution took 7 ms, finished with status code: 200
-2018-11-21T17:44:58.443618562Z: Function execution started
-2018-11-21T17:43:40.651063187Z: Function execution took 8 ms, finished with status code: 200
-2018-11-21T17:43:40.644123421Z: Function execution started
-2018-11-21T17:43:35.688702419Z: Function execution took 25 ms, finished with status code: 200
-2018-11-21T17:43:35.664212161Z: Function execution started
-2018-11-21T17:40:46.166468516Z: Function execution took 6 ms, finished with status code: 200
-2018-11-21T17:40:46.161422666Z: Function execution started
-2018-11-21T17:33:27.004019351Z: Function execution took 10 ms, finished with status code: 200
-2018-11-21T17:33:26.994600775Z: Function execution started
-Finally you can send an HTTP request directly to the endpoint using a tool like curl
-
-curl https://<region>-<project_name>.cloudfunctions.net/endpoint
+_Contributions are most welcome_
